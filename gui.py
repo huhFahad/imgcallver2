@@ -59,7 +59,7 @@ class ImageViewer(QMainWindow):
 """)
         # self.volume_button.setGeometry(10, 10, 150, 40)  # x, y, width, height
         
-        icon = QIcon("C:\\Users\\iamri\\Downloads\\volume-up-line-icon-vector.jpg")  # Provide the path to your icon image
+        icon = QIcon("vol_icon.jpg")  # Provide the path to your icon image
         self.volume_button.setIcon(icon)
         self.volume_button.setIconSize(QSize(40, 40))  # Adjust the icon size
         
