@@ -25,23 +25,23 @@ class WiFiSettingsDialog(QDialog):
     def populate_wifi_networks(self):
         """Fetch available Wi-Fi networks and populate the list based on OS."""
         try:
-            if platform.system() == "Windows":
-                # Check if there is a wireless adapter
-                self.result = subprocess.run(["netsh", "wlan", "show", "interfaces"], capture_output=True)
-                if self.result.returncode != 0:
-                    QMessageBox.warning(self, "Error", "No wireless adapter found or access denied.")
-                    return
+            # if platform.system() == "Windows":
+            #     # Check if there is a wireless adapter
+            #     self.result = subprocess.run(["netsh", "wlan", "show", "interfaces"], capture_output=True)
+            #     if self.result.returncode != 0:
+            #         QMessageBox.warning(self, "Error", "No wireless adapter found or access denied.")
+            #         return
 
-                # List available Wi-Fi networks
-                self.result = subprocess.check_output(["netsh", "wlan", "show", "network"])
-                networks = []
-                for line in self.result.decode().splitlines():
-                    if "SSID" in line:
-                        ssid = line.split(":")[1].strip()
-                        networks.append(ssid)
-                self.network_list.addItems(networks)
+            #     # List available Wi-Fi networks
+            #     self.result = subprocess.check_output(["netsh", "wlan", "show", "network"])
+            #     networks = []
+            #     for line in self.result.decode().splitlines():
+            #         if "SSID" in line:
+            #             ssid = line.split(":")[1].strip()
+            #             networks.append(ssid)
+            #     self.network_list.addItems(networks)
 
-            elif platform.system() == "Linux":
+            if platform.system() == "Linux":
                 # List available Wi-Fi networks
                 self.result = subprocess.check_output(["nmcli", "-t", "-f", "SSID", "device", "wifi", "list"])
                 networks = self.result.decode().strip().split("\n")
@@ -66,40 +66,36 @@ class WiFiSettingsDialog(QDialog):
         ssid = selected_network.text()
 
         try:
-            if platform.system() == "Windows":
-                # Connect to the Wi-Fi network using netsh (Windows)
-                subprocess.run(["netsh", "wlan", "connect", ssid], check=True)
+            # if platform.system() == "Windows":
+            #     # Connect to the Wi-Fi network using netsh (Windows)
+            #     subprocess.run(["netsh", "wlan", "connect", ssid], check=True)
 
-                # Check if the connection was successful by verifying the active network
-                if self.result.returncode == 0:
-                    # Verify if connected to the network
-                    connection_check = subprocess.check_output(["nmcli", "-t", "-f", "ACTIVE,SSID", "device", "wifi", "list"])
-                    if ssid in connection_check.decode():
-                        QMessageBox.information(self, "Success", f"Connected to {ssid}")
-                        self.close()
-                    else:
-                        QMessageBox.warning(self, "Error", f"Failed to connect to {ssid}.")
-                else:
-                    QMessageBox.warning(self, "Error", f"Failed to connect to {ssid}.")
+            #     # Check if the connection was successful by verifying the active network
+            #     if self.result.returncode == 0:
+            #         # Verify if connected to the network
+            #         connection_check = subprocess.check_output(["nmcli", "-t", "-f", "ACTIVE,SSID", "device", "wifi", "list"])
+            #         if ssid in connection_check.decode():
+            #             QMessageBox.information(self, "Success", f"Connected to {ssid}")
+            #             self.close()
+            #         else:
+            #             QMessageBox.warning(self, "Error", f"Failed to connect to {ssid}.")
+            #     else:
+            #         QMessageBox.warning(self, "Error", f"Failed to connect to {ssid}.")
 
-            elif platform.system() == "Linux":
+            if platform.system() == "Linux":
                 # Connect to the Wi-Fi network using nmcli (Linux)
-                subprocess.run(["nmcli", "dev", "wifi", "connect", ssid], check=True)
+                result = subprocess.run(["nmcli", "dev", "wifi", "connect", ssid], check=True)
 
-                # Check if the connection was successful by verifying the active network
-                if self.result.returncode == 0:
-                    # Verify if connected to the network
-                    connection_check = subprocess.check_output(["nmcli", "-t", "-f", "ACTIVE,SSID", "device", "wifi", "list"])
-                    if ssid in connection_check.decode():
-                        QMessageBox.information(self, "Success", f"Connected to {ssid}")
-                        self.close()
-                    else:
-                        QMessageBox.warning(self, "Error", f"Failed to connect to {ssid}.")
+                # Verify if connected to the network
+                connection_check = subprocess.check_output(["nmcli", "-t", "-f", "ACTIVE,SSID", "device", "wifi", "list"])
+                if f"yes:{ssid}" in connection_check.decode():
+                    QMessageBox.information(self, "Success", f"Connected to {ssid}")
                 else:
-                    QMessageBox.warning(self, "Error", f"Failed to connect to {ssid}.")
+                    QMessageBox.warning(self, "Error", f"Failed to verify connection to {ssid}.")
 
-            QMessageBox.information(self, "Success", f"Connected to {ssid}")
-            self.close()
+            else:
+                QMessageBox.warning(self, "Error", "Unsupported operating system.")
+                return
             
         except subprocess.CalledProcessError as e:
             QMessageBox.warning(self, "Error (connect_to_wifi > subprocess.CalledProcessError)", f"Failed to connect: {e}")
