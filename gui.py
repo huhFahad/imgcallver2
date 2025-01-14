@@ -51,8 +51,8 @@ class ImageViewer(QMainWindow):
         QPushButton {
             background-color: white;
             color: white;
-            border: 2px solid #888;
-            border-radius: 5px;
+          
+            border-radius: 20px;
             padding: 10px;
         }
         QPushButton:hover {
@@ -61,7 +61,8 @@ class ImageViewer(QMainWindow):
         QPushButton:pressed {
             background-color: #222;
         }
-        """)
+        """)  #border: 2px solid #888;
+        
         # self.volume_button.setGeometry(10, 10, 150, 40)  # x, y, width, height
         
         vol_icon = QIcon("vol_icon.png")  # Provide the path to your icon image
