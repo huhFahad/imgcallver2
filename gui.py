@@ -66,7 +66,7 @@ class ImageViewer(QMainWindow):
         
         vol_icon = QIcon("vol_icon.png")  # Provide the path to your icon image
         self.volume_button.setIcon(vol_icon)
-        self.volume_button.setIconSize(QSize(40, 40))  # Adjust the icon size
+        self.volume_button.setIconSize(QSize(30, 30))  # Adjust the icon size
         
         self.volume_button.setFixedSize(50, 50)  # Set width and height in pixels
         # self.volume_button.move(self.width() - 220, 20)  # Position: Top-right with margins
@@ -101,7 +101,7 @@ class ImageViewer(QMainWindow):
            
         wifi_icon = QIcon("wifi_icon.png")  # Provide the path to your icon image
         self.wifi_button.setIcon(wifi_icon)
-        self.wifi_button.setIconSize(QSize(40, 40))  # Adjust the icon size
+        self.wifi_button.setIconSize(QSize(30, 30))  # Adjust the icon size
         
         self.wifi_button.setFixedSize(50, 50)  # Set width and height in pixels
         self.wifi_button.clicked.connect(self.open_wifi_settings)
