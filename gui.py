@@ -87,7 +87,7 @@ class ImageViewer(QMainWindow):
     QPushButton {
         background-color: white;
         color: white;
-        border: 2px solid #888;
+        border: 5px solid #888;
         border-radius: 5px;
         padding: 10px;
     }
