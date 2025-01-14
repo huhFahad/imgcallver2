@@ -70,9 +70,33 @@ class WiFiSettingsDialog(QDialog):
                 # Connect to the Wi-Fi network using netsh (Windows)
                 subprocess.run(["netsh", "wlan", "connect", ssid], check=True)
 
+                # Check if the connection was successful by verifying the active network
+                if result.returncode == 0:
+                    # Verify if connected to the network
+                    connection_check = subprocess.check_output(["nmcli", "-t", "-f", "ACTIVE,SSID", "device", "wifi", "list"])
+                    if ssid in connection_check.decode():
+                        QMessageBox.information(self, "Success", f"Connected to {ssid}")
+                        self.close()
+                    else:
+                        QMessageBox.warning(self, "Error", f"Failed to connect to {ssid}.")
+                else:
+                    QMessageBox.warning(self, "Error", f"Failed to connect to {ssid}.")
+
             elif platform.system() == "Linux":
                 # Connect to the Wi-Fi network using nmcli (Linux)
                 subprocess.run(["nmcli", "dev", "wifi", "connect", ssid], check=True)
+
+                # Check if the connection was successful by verifying the active network
+                if result.returncode == 0:
+                    # Verify if connected to the network
+                    connection_check = subprocess.check_output(["nmcli", "-t", "-f", "ACTIVE,SSID", "device", "wifi", "list"])
+                    if ssid in connection_check.decode():
+                        QMessageBox.information(self, "Success", f"Connected to {ssid}")
+                        self.close()
+                    else:
+                        QMessageBox.warning(self, "Error", f"Failed to connect to {ssid}.")
+                else:
+                    QMessageBox.warning(self, "Error", f"Failed to connect to {ssid}.")
 
             QMessageBox.information(self, "Success", f"Connected to {ssid}")
             self.close()
