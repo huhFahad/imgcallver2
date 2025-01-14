@@ -186,15 +186,15 @@ def get_wifi_strength(self):
                     ssid = parts[1].strip()  # The SSID
                     signal_strength = parts[2].strip()  # The Signal strength
                     # print(f"Connected to {ssid} with signal strength: {signal_strength}%")
-                    return int(signal_strength)  # Convert signal strength to integer
+                    return True, int(signal_strength)  # Convert signal strength to integer
 
         # Return None if no active connection found
         print("No active Wi-Fi connection detected.")
         self.connected = False
-        return None
+        return False, None
     except subprocess.CalledProcessError as e:
         print(f"Command failed: {e}")
-        return None
+        return False, None
     except Exception as e:
         print(f"Unexpected error: {e}")
-        return None
+        return False, None

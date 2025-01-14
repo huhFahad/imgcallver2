@@ -79,7 +79,8 @@ class ImageViewer(QMainWindow):
 
         # Add Wi-Fi Settings Button
         self.wifi_button = QPushButton("", self)
-        self.get_wifi_strength(self)
+        connected, strength = get_wifi_strength()
+        self.connected = connected
         if self.connected:
             self.wifi_button.setStyleSheet("""
         QPushButton {
