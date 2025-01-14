@@ -4,7 +4,7 @@ from PyQt5.QtGui import QPixmap, QIcon
 from PyQt5.QtCore import Qt, pyqtSignal, QObject, QSize
 from config import Config
 from media_manager import MediaManager
-from wifi_control import WiFiSettingsDialog
+from wifi_control import WiFiSettingsDialog, get_wifi_strength
 
 class UpdateSignal(QObject):
     update_images = pyqtSignal(list)
@@ -79,21 +79,38 @@ class ImageViewer(QMainWindow):
 
         # Add Wi-Fi Settings Button
         self.wifi_button = QPushButton("", self)
-        self.wifi_button.setStyleSheet("""
-    QPushButton {
-        background-color: white;
-        color: white;
-        border: 2px solid #888;
-        border-radius: 5px;
-        padding: 10px;
-    }
-    QPushButton:hover {
-        background-color: #666;
-    }
-    QPushButton:pressed {
-        background-color: #222;
-    }
-""")
+        if self.connected:
+            self.wifi_button.setStyleSheet("""
+        QPushButton {
+            background-color: white;
+            color: white;
+            border: 2px solid #888;
+            border-radius: 5px;
+            padding: 10px;
+        }
+        QPushButton:hover {
+            background-color: #666;
+        }
+        QPushButton:pressed {
+            background-color: #222;
+        }
+    """)
+        else:
+            self.wifi_button.setStyleSheet("""
+        QPushButton {
+            background-color: white;
+            color: white;
+            border: 2px solid #888;
+            border-radius: 5px;
+            padding: 10px;
+        }
+        QPushButton:hover {
+            background-color: #666;
+        }
+        QPushButton:pressed {
+            background-color: #222;
+        }
+    """)
         
         wifi_icon = QIcon("wifi_icon.png")  # Provide the path to your icon image
         self.wifi_button.setIcon(wifi_icon)
@@ -231,32 +248,3 @@ class VolumeControlWidget(QWidget):
         self.media_manager.media_channel.set_volume(volume)
         self.viewer.media_volume = self.media_slider.value()  # Save state
 
-# class MainWindow(QMainWindow):
-#     def __init__(self):
-#         super().__init__()
-#         self.setWindowTitle("Main Window")
-#         self.setFixedSize(600, 400)
-
-        # layout = QVBoxLayout()
-
-        # # Add Wi-Fi Settings Button
-        # self.wifi_button = QPushButton("Wi-Fi Settings")
-        # self.wifi_button.clicked.connect(self.open_wifi_settings)
-        # layout.addWidget(self.wifi_button)
-
-        # Set central widget
-        # central_widget = QWidget()
-        # central_widget.setLayout(layout)
-        # self.setCentralWidget(central_widget)
-
-    # def open_wifi_settings(self):
-    #     dialog = WiFiSettingsDialog(self)
-    #     dialog.exec_()
-
-
-# if __name__ == "__main__":
-#     import sys
-#     app = QApplication(sys.argv)
-#     window = MainWindow()
-#     window.show()
-#     sys.exit(app.exec_())
