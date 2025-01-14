@@ -44,20 +44,20 @@ class ImageViewer(QMainWindow):
         # Volume control button (added directly to layout)
         self.volume_button = QPushButton("", self)
         self.volume_button.setStyleSheet("""
-    QPushButton {
-        background-color: white;
-        color: white;
-        border: 2px solid #888;
-        border-radius: 5px;
-        padding: 10px;
-    }
-    QPushButton:hover {
-        background-color: #666;
-    }
-    QPushButton:pressed {
-        background-color: #222;
-    }
-""")
+        QPushButton {
+            background-color: white;
+            color: white;
+            border: 2px solid #888;
+            border-radius: 5px;
+            padding: 10px;
+        }
+        QPushButton:hover {
+            background-color: #666;
+        }
+        QPushButton:pressed {
+            background-color: #222;
+        }
+        """)
         # self.volume_button.setGeometry(10, 10, 150, 40)  # x, y, width, height
         
         vol_icon = QIcon("vol_icon.png")  # Provide the path to your icon image
@@ -79,7 +79,7 @@ class ImageViewer(QMainWindow):
 
         # Add Wi-Fi Settings Button
         self.wifi_button = QPushButton("", self)
-        self.get_wifi_strength()
+        self.get_wifi_strength(self)
         if self.connected:
             self.wifi_button.setStyleSheet("""
         QPushButton {
