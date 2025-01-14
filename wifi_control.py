@@ -169,7 +169,7 @@ class WiFiSettingsDialog(QDialog):
         msg.exec_()
 
 
-def get_wifi_strength():
+def get_wifi_strength(self):
     """ Get the signal strength of the currently connected Wi-Fi network """
     try:
         # Call nmcli to get details of the active Wi-Fi connection
