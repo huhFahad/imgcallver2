@@ -86,10 +86,23 @@ class WiFiSettingsDialog(QDialog):
                 else:
                     subprocess.run(["nmcli", "dev", "wifi", "connect", ssid], check=True)
 
+                # Check if the connection was successful by checking the active connection
+                result = subprocess.check_output(["nmcli", "-t", "-f", "ACTIVE,SSID", "connection", "show"])
+                active_connections = result.decode().splitlines()
+
+                # If the selected network is active, show success
+                if any(ssid in line for line in active_connections):
+                    QMessageBox.information(self, "Success", f"Connected to {ssid}")
+                    self.close()
+                else:
+                    QMessageBox.warning(self, "Error", "Failed to connect. Please check your credentials.")
+                    return
+
             QMessageBox.information(self, "Success", f"Connected to {ssid}")
             self.close()
-            
+
         except subprocess.CalledProcessError as e:
             QMessageBox.warning(self, "Error", f"Failed to connect: {e}")
         except Exception as e:
             QMessageBox.warning(self, "Error", f"An unexpected error occurred: {e}")
+
