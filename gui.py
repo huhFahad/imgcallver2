@@ -19,7 +19,7 @@ class ImageViewer(QMainWindow):
         self.media_volume = 100  # Default media audio volume 
         self.wifi_update_timer = QTimer(self)  # Create a timer for periodic Wi-Fi checks
         self.wifi_update_timer.timeout.connect(self.update_wifi_status)  # Connect the timeout signal to the status update method
-        self.wifi_update_timer.start(5000)  # Update every 5 seconds (adjust the interval as needed)
+        self.wifi_update_timer.start(3000)  # Update every 5 seconds (adjust the interval as needed)
 
 
         
