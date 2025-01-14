@@ -9,7 +9,7 @@ from wifi_control import WiFiSettingsDialog, get_wifi_strength
 class UpdateSignal(QObject):
     update_images = pyqtSignal(list)
 
-class ImageViewer(QMainWindow):
+class ImageViewer(self, QMainWindow):
     def __init__(self, media_manager):
         super().__init__()
         self.media_manager = media_manager
