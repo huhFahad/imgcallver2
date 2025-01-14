@@ -176,7 +176,7 @@ class ImageViewer(QMainWindow):
             return QPixmap(Config.BACKGROUND_IMAGE)
 
     def open_wifi_settings(self):
-        wifi_dialog = WiFiSettingsDialog(self)
+        wifi_dialog = WiFiSettingsDialog()
         wifi_dialog.move(1300,500)
         wifi_dialog.exec_()
 
