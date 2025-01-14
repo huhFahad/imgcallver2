@@ -48,19 +48,19 @@ class WiFiSettingsDialog(QDialog):
                 self.network_list.addItems(networks)
 
             else:
-                QMessageBox.warning(self, "Error", "Unsupported operating system.")
+                QMessageBox.warning(self, "Error (populate_wifi_networks > OS else)", "Unsupported operating system.")
                 return
 
         except subprocess.CalledProcessError as e:
-            QMessageBox.warning(self, "Error", f"Failed to fetch Wi-Fi networks: {e}")
+            QMessageBox.warning(self, "Error (populate_wifi_networks > subprocess.CalledProcessError)", f"Failed to fetch Wi-Fi networks: {e}")
         except Exception as e:
-            QMessageBox.warning(self, "Error", f"An unexpected error occurred: {e}")
+            QMessageBox.warning(self, "Error (populate_wifi_networks > Exception)", f"An unexpected error occurred: {e}")
 
     def connect_to_wifi(self):
         """Connect to the selected Wi-Fi network."""
         selected_network = self.network_list.currentItem()
         if selected_network is None:
-            QMessageBox.warning(self, "Error", "Please select a network.")
+            QMessageBox.warning(self, "Error (connect_to_wifi > selected_network is None)", "Please select a network.")
             return
 
         ssid = selected_network.text()
@@ -78,6 +78,6 @@ class WiFiSettingsDialog(QDialog):
             self.close()
             
         except subprocess.CalledProcessError as e:
-            QMessageBox.warning(self, "Error", f"Failed to connect: {e}")
+            QMessageBox.warning(self, "Error (connect_to_wifi > subprocess.CalledProcessError)", f"Failed to connect: {e}")
         except Exception as e:
-            QMessageBox.warning(self, "Error", f"An unexpected error occurred: {e}")
+            QMessageBox.warning(self, "Error (connect_to_wifi > Exception)", f"An unexpected error occurred: {e}")
