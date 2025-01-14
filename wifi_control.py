@@ -27,15 +27,15 @@ class WiFiSettingsDialog(QDialog):
         try:
             if platform.system() == "Windows":
                 # Check if there is a wireless adapter
-                result = subprocess.run(["netsh", "wlan", "show", "interfaces"], capture_output=True)
-                if result.returncode != 0:
+                self.result = subprocess.run(["netsh", "wlan", "show", "interfaces"], capture_output=True)
+                if self.result.returncode != 0:
                     QMessageBox.warning(self, "Error", "No wireless adapter found or access denied.")
                     return
 
                 # List available Wi-Fi networks
-                result = subprocess.check_output(["netsh", "wlan", "show", "network"])
+                self.result = subprocess.check_output(["netsh", "wlan", "show", "network"])
                 networks = []
-                for line in result.decode().splitlines():
+                for line in self.result.decode().splitlines():
                     if "SSID" in line:
                         ssid = line.split(":")[1].strip()
                         networks.append(ssid)
@@ -43,8 +43,8 @@ class WiFiSettingsDialog(QDialog):
 
             elif platform.system() == "Linux":
                 # List available Wi-Fi networks
-                result = subprocess.check_output(["nmcli", "-t", "-f", "SSID", "device", "wifi", "list"])
-                networks = result.decode().strip().split("\n")
+                self.result = subprocess.check_output(["nmcli", "-t", "-f", "SSID", "device", "wifi", "list"])
+                networks = self.result.decode().strip().split("\n")
                 self.network_list.addItems(networks)
 
             else:
@@ -71,7 +71,7 @@ class WiFiSettingsDialog(QDialog):
                 subprocess.run(["netsh", "wlan", "connect", ssid], check=True)
 
                 # Check if the connection was successful by verifying the active network
-                if result.returncode == 0:
+                if self.result.returncode == 0:
                     # Verify if connected to the network
                     connection_check = subprocess.check_output(["nmcli", "-t", "-f", "ACTIVE,SSID", "device", "wifi", "list"])
                     if ssid in connection_check.decode():
@@ -87,7 +87,7 @@ class WiFiSettingsDialog(QDialog):
                 subprocess.run(["nmcli", "dev", "wifi", "connect", ssid], check=True)
 
                 # Check if the connection was successful by verifying the active network
-                if result.returncode == 0:
+                if self.result.returncode == 0:
                     # Verify if connected to the network
                     connection_check = subprocess.check_output(["nmcli", "-t", "-f", "ACTIVE,SSID", "device", "wifi", "list"])
                     if ssid in connection_check.decode():
