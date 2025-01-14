@@ -79,8 +79,7 @@ class ImageViewer(QMainWindow):
 
         # Add Wi-Fi Settings Button
         self.wifi_button = QPushButton("", self)
-        connected, strength = get_wifi_strength(self)
-        self.connected = connected
+        self.connected, strength = get_wifi_strength(self)
         if self.connected:
             self.wifi_button.setStyleSheet("""
         QPushButton {
@@ -174,15 +173,6 @@ class ImageViewer(QMainWindow):
 
                  # Set the size of the image widget to be fixed based on the pixmap size
                 self.image_widget.setFixedSize(pixmap.size())  # Set size based on pixmap's size
-                
-                # # If the layout is causing issues, update it to reflect the fixed size
-                # layout = self.image_widget.layout()
-                # if layout:
-                #     layout.setSizeConstraint(QLayout.SetFixedSize)
-
-                # # Explicitly set the size of the parent widget if needed
-                # self.setFixedSize(self.image_widget.size())
-
 
     def load_image(self, url):
         try:
