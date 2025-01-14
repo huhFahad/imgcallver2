@@ -8,6 +8,7 @@ from gui import ImageViewer
 from media_manager import MediaManager
 from playlist_manager import PlaylistManager
 from config import Config
+from wifi_control import get_wifi_strength
 import json
 import pygame
 
@@ -25,6 +26,8 @@ class PlaylistMonitor(Thread):
         # self.media_manager.play_background_music()
         
         try:
+
+            self.connected, strength = get_wifi_strength(self)
 
              # Only start the background music once
             if not hasattr(self, 'background_playing') or not self.background_playing:
