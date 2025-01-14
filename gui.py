@@ -182,7 +182,7 @@ class ImageViewer(QMainWindow):
             self.wifi_button.setStyleSheet("""
                 QPushButton {
                     background-color: green;
-                    border: 2px;
+                    border: 5px;
                 }
                 QPushButton:hover {
                     background-color: #666;
@@ -195,7 +195,7 @@ class ImageViewer(QMainWindow):
             self.wifi_button.setStyleSheet("""
                 QPushButton {
                     background-color: red;
-                    border: 2px;
+                    border: 5px;
                 }
                 QPushButton:hover {
                     background-color: #666;
