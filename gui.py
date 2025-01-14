@@ -87,8 +87,8 @@ class ImageViewer(QMainWindow):
     QPushButton {
         background-color: white;
         color: white;
-        border: 2px solid #888;
-        border-radius: 5px;
+        
+        border-radius: 20px;
         padding: 10px;
     }
     QPushButton:hover {
@@ -97,7 +97,7 @@ class ImageViewer(QMainWindow):
     QPushButton:pressed {
         background-color: #222;
     }
-""")
+""")# border: 2px solid #888;
            
         wifi_icon = QIcon("wifi_icon.png")  # Provide the path to your icon image
         self.wifi_button.setIcon(wifi_icon)
@@ -182,7 +182,8 @@ class ImageViewer(QMainWindow):
             self.wifi_button.setStyleSheet("""
                 QPushButton {
                     background-color: green;
-                    border: 2px solid #888;
+                    border-radius: 20px;
+                    padding: 10px;
                 }
                 QPushButton:hover {
                     background-color: #666;
@@ -195,7 +196,8 @@ class ImageViewer(QMainWindow):
             self.wifi_button.setStyleSheet("""
                 QPushButton {
                     background-color: red;
-                    border: 2px solid #888;
+                    border-radius: 20px;
+                    padding: 10px;
                 }
                 QPushButton:hover {
                     background-color: #666;
