@@ -2,7 +2,7 @@ import subprocess
 import time
 
 from PyQt5.QtWidgets import QDialog, QLabel, QHBoxLayout, QVBoxLayout, QComboBox, QLineEdit, QPushButton, QMessageBox
-
+from PyQt5.QtCore import QTimer
 
 class WiFiSettingsDialog(QDialog):
     def __init__(self):
@@ -163,6 +163,7 @@ class WiFiSettingsDialog(QDialog):
         msg.setIcon(QMessageBox.Information)
         msg.setWindowTitle(title)
         msg.setText(message)
+        QTimer.singleShot(2000, msg.close)
         msg.exec_()
 
 
