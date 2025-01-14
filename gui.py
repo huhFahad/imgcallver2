@@ -9,7 +9,7 @@ from wifi_control import WiFiSettingsDialog, get_wifi_strength
 class UpdateSignal(QObject):
     update_images = pyqtSignal(list)
 
-class ImageViewer(self, QMainWindow):
+class ImageViewer(QMainWindow):
     def __init__(self, media_manager):
         super().__init__()
         self.media_manager = media_manager
@@ -79,6 +79,7 @@ class ImageViewer(self, QMainWindow):
 
         # Add Wi-Fi Settings Button
         self.wifi_button = QPushButton("", self)
+        self.get_wifi_strength()
         if self.connected:
             self.wifi_button.setStyleSheet("""
         QPushButton {
