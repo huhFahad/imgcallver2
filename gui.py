@@ -79,10 +79,10 @@ class ImageViewer(QMainWindow):
 
         # Add Wi-Fi Settings Button
         self.wifi_button = QPushButton("", self)
-        if self.connected:
+        if get_wifi_strength.connected:
             self.wifi_button.setStyleSheet("""
         QPushButton {
-            background-color: white;
+            background-color: green;
             color: white;
             border: 2px solid #888;
             border-radius: 5px;
@@ -98,7 +98,7 @@ class ImageViewer(QMainWindow):
         else:
             self.wifi_button.setStyleSheet("""
         QPushButton {
-            background-color: white;
+            background-color: red;
             color: white;
             border: 2px solid #888;
             border-radius: 5px;

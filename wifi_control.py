@@ -180,6 +180,7 @@ def get_wifi_strength():
         # Process each line of the output
         for line in result.strip().split('\n'):
             if line.startswith('*'):  # The '*' indicates the currently active connection
+                connected = True
                 parts = line.split(':')
                 if len(parts) >= 3:
                     ssid = parts[1].strip()  # The SSID
@@ -189,6 +190,7 @@ def get_wifi_strength():
 
         # Return None if no active connection found
         print("No active Wi-Fi connection detected.")
+        connected = False
         return None
     except subprocess.CalledProcessError as e:
         print(f"Command failed: {e}")
