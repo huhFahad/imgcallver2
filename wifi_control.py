@@ -4,7 +4,7 @@ import time
 from PyQt5.QtWidgets import QDialog, QLabel, QHBoxLayout, QVBoxLayout, QComboBox, QLineEdit, QPushButton, QMessageBox
 
 
-class WifiDialog(QDialog):
+class WiFiSettingsDialog(QDialog):
     def __init__(self):
         super().__init__()
 
