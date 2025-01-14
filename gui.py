@@ -17,6 +17,10 @@ class ImageViewer(QMainWindow):
         self.init_ui()
         self.bg_volume = 100  # Default background music volume 
         self.media_volume = 100  # Default media audio volume 
+        self.wifi_update_timer = QTimer(self)  # Create a timer for periodic Wi-Fi checks
+        self.wifi_update_timer.timeout.connect(self.update_wifi_status)  # Connect the timeout signal to the status update method
+        self.wifi_update_timer.start(5000)  # Update every 5 seconds (adjust the interval as needed)
+
 
         
     def init_ui(self):
@@ -79,40 +83,22 @@ class ImageViewer(QMainWindow):
 
         # Add Wi-Fi Settings Button
         self.wifi_button = QPushButton("", self)
-        # self.connected, strength = get_wifi_strength(self)
-        if self.connected:
-            self.wifi_button.setStyleSheet("""
-        QPushButton {
-            background-color: green;
-            color: white;
-            border: 2px solid #888;
-            border-radius: 5px;
-            padding: 10px;
-        }
-        QPushButton:hover {
-            background-color: #666;
-        }
-        QPushButton:pressed {
-            background-color: #222;
-        }
-    """)
-        else:
-            self.wifi_button.setStyleSheet("""
-        QPushButton {
-            background-color: red;
-            color: white;
-            border: 2px solid #888;
-            border-radius: 5px;
-            padding: 10px;
-        }
-        QPushButton:hover {
-            background-color: #666;
-        }
-        QPushButton:pressed {
-            background-color: #222;
-        }
-    """)
-        
+        self.wifi_button.setStyleSheet("""
+    QPushButton {
+        background-color: white;
+        color: white;
+        border: 2px solid #888;
+        border-radius: 5px;
+        padding: 10px;
+    }
+    QPushButton:hover {
+        background-color: #666;
+    }
+    QPushButton:pressed {
+        background-color: #222;
+    }
+""")
+           
         wifi_icon = QIcon("wifi_icon.png")  # Provide the path to your icon image
         self.wifi_button.setIcon(wifi_icon)
         self.wifi_button.setIconSize(QSize(40, 40))  # Adjust the icon size
@@ -188,6 +174,43 @@ class ImageViewer(QMainWindow):
         wifi_dialog = WiFiSettingsDialog()
         wifi_dialog.move(1300,500)
         wifi_dialog.exec_()
+
+    def update_wifi_status(self):
+        """Check Wi-Fi connection and update the Wi-Fi button"""
+        connected, _ = get_wifi_strength(self)  # Check Wi-Fi connection status
+        if connected:
+            self.wifi_button.setStyleSheet("""
+                QPushButton {
+                    background-color: green;
+                    color: white;
+                    border: 2px solid #888;
+                    border-radius: 5px;
+                    padding: 10px;
+                }
+                QPushButton:hover {
+                    background-color: #666;
+                }
+                QPushButton:pressed {
+                    background-color: #222;
+                }
+            """)
+        else:
+            self.wifi_button.setStyleSheet("""
+                QPushButton {
+                    background-color: red;
+                    color: white;
+                    border: 2px solid #888;
+                    border-radius: 5px;
+                    padding: 10px;
+                }
+                QPushButton:hover {
+                    background-color: #666;
+                }
+                QPushButton:pressed {
+                    background-color: #222;
+                }
+            """)
+
 
 class VolumeControlWidget(QWidget):
     def __init__(self, media_manager, viewer):

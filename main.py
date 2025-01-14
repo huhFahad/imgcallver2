@@ -27,9 +27,9 @@ class PlaylistMonitor(Thread):
         
         try:
 
-            self.connected, strength = get_wifi_strength(self)
+            # self.connected, strength = get_wifi_strength(self)
 
-             # Only start the background music once
+            # Only start the background music once
             if not hasattr(self, 'background_playing') or not self.background_playing:
                 self.media_manager.play_background_music()  # Start background music
                 self.background_playing = True  # Flag to avoid resetting background music
