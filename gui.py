@@ -226,7 +226,7 @@ class VolumeControlWidget(QWidget):
         # Background music volume control
         self.bg_label = QLabel("Background Music Volume")
         self.bg_slider = QSlider(Qt.Horizontal)
-        self.media_slider = setStyleSheet("""
+        self.bg_slider.setStyleSheet("""
     QSlider {
         background-color: #f0f0f0;
         height: 10px;
@@ -250,7 +250,7 @@ class VolumeControlWidget(QWidget):
         # Media audio volume control
         self.media_label = QLabel("Media Audio Volume")
         self.media_slider = QSlider(Qt.Horizontal)
-        self.media_slider = setStyleSheet("""
+        self.media_slider.setStyleSheet("""
     QSlider {
         background-color: #f0f0f0;
         height: 10px;
