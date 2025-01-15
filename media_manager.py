@@ -5,7 +5,7 @@ import json
 import pygame
 from io import BytesIO
 from config import Config
-from gui import VolumeControlWidget
+from vol_control import VolumeControlWidget
 
 class MediaManager:
     def __init__(self):
