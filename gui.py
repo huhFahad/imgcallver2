@@ -16,7 +16,7 @@ class ImageViewer(QMainWindow):
         self.media_manager = media_manager
         self.setFixedSize(1920,1080)
         self.init_ui()
-        self.bg_volume = 100  # Default background music volume 
+        # self.bg_volume = 100  # Default background music volume 
         self.media_volume = 100  # Default media audio volume 
         self.wifi_update_timer = QTimer(self)  # Create a timer for periodic Wi-Fi checks
         self.wifi_update_timer.timeout.connect(self.update_wifi_status)  # Connect the timeout signal to the status update method
