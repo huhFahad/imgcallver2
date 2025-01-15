@@ -104,6 +104,7 @@ class PlaylistMonitor(Thread):
                 
                 # Restore background music volume
                 self.vol_control_widget.update_bg_volume()
+                print("inside main")
                 # self.media_manager.restore_background_volume()
                 
             except Exception as e:
