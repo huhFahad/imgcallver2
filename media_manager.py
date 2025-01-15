@@ -66,7 +66,7 @@ class MediaManager:
             background_sound = pygame.mixer.Sound(Config.BACKGROUND_MUSIC)
             self.background_channel.play(background_sound, loops=-1)
             # volume = self.vol_control_widget.bg_slider.value() / 100.0
-            self.background_channel.set_volume(0.69)
+            self.background_channel.set_volume(1.0)
             
     def restore_background_volume(self,bg_volume):
         self.background_channel.set_volume(bg_volume)

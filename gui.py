@@ -16,8 +16,9 @@ class ImageViewer(QMainWindow):
         self.media_manager = media_manager
         self.setFixedSize(1920,1080)
         self.init_ui()
-        # self.bg_volume = 100  # Default background music volume 
+        self.bg_volume = 50  # Default background music volume 
         self.media_volume = 100  # Default media audio volume 
+        
         self.wifi_update_timer = QTimer(self)  # Create a timer for periodic Wi-Fi checks
         self.wifi_update_timer.timeout.connect(self.update_wifi_status)  # Connect the timeout signal to the status update method
         self.wifi_update_timer.start(3000)  # Update every 5 seconds (adjust the interval as needed)
@@ -124,14 +125,7 @@ class ImageViewer(QMainWindow):
         self.volume_control.move(1700, 800)
         self.volume_control.show()
     
-    def update_image_display(self, image_urls):
-        
-        # # Clear existing images
-        # for i in reversed(range(self.layout.count())):
-        #     widget = self.layout.itemAt(i).widget()
-        #     if isinstance(widget, QLabel):  # Clears only QLabel widgets
-        #         widget.setParent(None)
-                
+    def update_image_display(self, image_urls):    
         if not image_urls:
             image_urls = [Config.BACKGROUND_IMAGE]
             
@@ -139,12 +133,7 @@ class ImageViewer(QMainWindow):
         for url in image_urls:
             pixmap = self.load_image(url)
             if pixmap:
-                # label = QLabel(self)
                 pixmap = pixmap.scaled(self.size(), Qt.KeepAspectRatio, Qt.SmoothTransformation)
-                # label.setPixmap(pixmap)
-                # label.setAlignment(Qt.AlignCenter)
-                # label.setScaledContents(True)
-                # self.layout.addWidget(label)
 
                 # Ensure the pixmap isn't too large for the widget
                 # Limit the pixmap size to avoid widget expansion
@@ -153,7 +142,6 @@ class ImageViewer(QMainWindow):
                 
                 # Scaling the pixmap to fit the maximum size
                 pixmap = pixmap.scaled(max_width, max_height, Qt.KeepAspectRatio)
-
 
                 self.image_widget.setPixmap(pixmap)
                 self.image_widget.setAlignment(Qt.AlignCenter)

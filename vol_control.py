@@ -13,6 +13,7 @@ class VolumeControlWidget(QWidget):
 
     def init_ui(self):
         self.setWindowTitle("Volume Control")
+        self.setFixedSize(150, 50)
         self.setStyleSheet("background-color: black; color: white;")
 
         # Layout
