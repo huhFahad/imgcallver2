@@ -5,12 +5,14 @@ import json
 import pygame
 from io import BytesIO
 from config import Config
+from gui import VolumeControlWidget
 
 class MediaManager:
     def __init__(self):
         pygame.mixer.init()
         self.background_channel = pygame.mixer.Channel(0)
         self.media_channel = pygame.mixer.Channel(1)
+        self.vol_control_widget = VolumeControlWidget(self.media_manager, viewer)
         
     def download_file(self, url, directory):
         try:
@@ -63,7 +65,8 @@ class MediaManager:
         if os.path.exists(Config.BACKGROUND_MUSIC):
             background_sound = pygame.mixer.Sound(Config.BACKGROUND_MUSIC)
             self.background_channel.play(background_sound, loops=-1)
-            self.background_channel.set_volume(1.0)
+            volume = self.vol_control_widget.bg_slider.value() / 100.0
+            self.background_channel.set_volume(volume)
             
     def restore_background_volume(self,bg_volume):
         self.background_channel.set_volume(bg_volume)

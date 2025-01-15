@@ -103,7 +103,7 @@ class PlaylistMonitor(Thread):
                 time.sleep(total_wait)
                 
                 # Restore background music volume
-                # self.vol_control_widget.update_bg_volume()
+                self.vol_control_widget.update_bg_volume()
                 print("inside main")
                 # self.media_manager.restore_background_volume()
                 
