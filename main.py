@@ -102,7 +102,7 @@ class PlaylistMonitor(Thread):
                 time.sleep(total_wait)
                 
                 # Restore background music volume
-                bgv = VolumeControlWidget().bg_slider.value()/100.0
+                bgv = self.VolumeControlWidget().bg_slider.value()/100.0
                 self.media_manager.restore_background_volume(bgv)
                 
             except Exception as e:
