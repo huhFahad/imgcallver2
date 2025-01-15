@@ -135,7 +135,7 @@ def main():
     playlist_thread = Thread(target=run_playlist_loop, daemon=True)
     playlist_thread.start()
     
-    app.aboutToQuit.connect(restore_screen_saver)
+    # app.aboutToQuit.connect(restore_screen_saver)
     app.aboutToQuit.connect(lambda: setattr(playlist_thread, "running", False))
     
     sys.exit(app.exec_())
