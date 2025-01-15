@@ -1,6 +1,7 @@
 # main.py
 import sys
 import os
+import subprocess
 import time
 from threading import Thread
 from PyQt5.QtWidgets import QApplication
@@ -109,8 +110,12 @@ class PlaylistMonitor(Thread):
         """Stop the monitor thread"""
         self.running = False
 
+def restore_screen_saver():
+        subprocess.call(["xdg-screensaver", "activate", ":0"])
+
 def main():
     app = QApplication(sys.argv)
+    subprocess.call(["xdg-screensaver", "suspend", ":0"])
     media_manager = MediaManager()  # Instantiate MediaManager
     viewer = ImageViewer(media_manager) 
     viewer.show()
@@ -128,7 +133,9 @@ def main():
     playlist_thread = Thread(target=run_playlist_loop, daemon=True)
     playlist_thread.start()
     
+    app.aboutToQuit.connect(restore_screen_saver)
     app.aboutToQuit.connect(lambda: setattr(playlist_thread, "running", False))
+    
     sys.exit(app.exec_())
 
 if __name__ == "__main__":
