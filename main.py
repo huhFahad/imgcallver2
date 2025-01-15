@@ -129,7 +129,7 @@ def main():
     viewer.show()
 
     suspend_screensaver(viewer)
-    
+
     monitor = PlaylistMonitor(viewer)
     
     def run_playlist_loop():
@@ -146,7 +146,7 @@ def main():
     
     # app.aboutToQuit.connect(restore_screen_saver)
     app.aboutToQuit.connect(lambda: setattr(playlist_thread, "running", False))
-    app.aboutToQuit.connect(lambda: restore_screen_saver(viewer))
+    app.aboutToQuit.connect(lambda: restore_screensaver(viewer))
     sys.exit(app.exec_())
 
 if __name__ == "__main__":
