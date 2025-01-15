@@ -112,15 +112,24 @@ class PlaylistMonitor(Thread):
         """Stop the monitor thread"""
         self.running = False
 
-def restore_screen_saver():
-        subprocess.call(["xdg-screensaver", "activate", ":0"])
+def suspend_screensaver(window):
+    """Suspend screensaver for the given window."""
+    window_id = int(window.winId())  # Get the Window ID
+    subprocess.call(["xdg-screensaver", "suspend", str(window_id)])
+
+def restore_screensaver(window):
+    """Restore screensaver for the given window."""
+    window_id = int(window.winId())  # Get the Window ID
+    subprocess.call(["xdg-screensaver", "activate", str(window_id)])
 
 def main():
     app = QApplication(sys.argv)
     media_manager = MediaManager()  # Instantiate MediaManager
     viewer = ImageViewer(media_manager) 
     viewer.show()
-    subprocess.call(["xdg-screensaver", "suspend", ":0"])
+
+    suspend_screensaver(viewer)
+    
     monitor = PlaylistMonitor(viewer)
     
     def run_playlist_loop():
@@ -137,7 +146,7 @@ def main():
     
     # app.aboutToQuit.connect(restore_screen_saver)
     app.aboutToQuit.connect(lambda: setattr(playlist_thread, "running", False))
-    
+    app.aboutToQuit.connect(lambda: restore_screen_saver(viewer))
     sys.exit(app.exec_())
 
 if __name__ == "__main__":
