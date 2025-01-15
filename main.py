@@ -23,7 +23,7 @@ class PlaylistMonitor(Thread):
         self.running = True
         self.media_manager = MediaManager()
         self.playlist_manager = PlaylistManager()
-        self.vol_control_widget = VolumeControlWidget()
+        self.vol_control_widget = VolumeControlWidget(media_manager, viewer)
         
     def run(self):
         """Main thread loop that checks for new playlists"""
