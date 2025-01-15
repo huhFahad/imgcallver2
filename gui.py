@@ -62,7 +62,7 @@ class ImageViewer(QMainWindow):
             background-color: #222;
         }
         """)  #border: 2px solid #888;
-        
+
         # self.volume_button.setGeometry(10, 10, 150, 40)  # x, y, width, height
         
         vol_icon = QIcon("vol_icon.png")  # Provide the path to your icon image
@@ -225,14 +225,14 @@ class VolumeControlWidget(QWidget):
 
         # Background music volume control
         self.bg_label = QLabel("Background Music Volume")
-        self.bg_slider = QSlider(Qt.Horizontal)
+        self.bg_slider = QSlider(Qt.Vertical)
         self.bg_slider.setRange(0, 100)
         self.bg_slider.setValue(self.viewer.bg_volume)
         self.bg_slider.valueChanged.connect(self.update_bg_volume)
 
         # Media audio volume control
         self.media_label = QLabel("Media Audio Volume")
-        self.media_slider = QSlider(Qt.Horizontal)
+        self.media_slider = QSlider(Qt.Vertical)
         self.media_slider.setRange(0, 100)
         self.media_slider.setValue(self.viewer.media_volume)
         self.media_slider.valueChanged.connect(self.update_media_volume)
