@@ -23,6 +23,7 @@ class PlaylistMonitor(Thread):
         self.running = True
         self.media_manager = MediaManager()
         self.playlist_manager = PlaylistManager()
+        self.vol_control_widget = VolumeControlWidget()
         
     def run(self):
         """Main thread loop that checks for new playlists"""
@@ -102,8 +103,8 @@ class PlaylistMonitor(Thread):
                 time.sleep(total_wait)
                 
                 # Restore background music volume
-                bgv = self.VolumeControlWidget().bg_slider.value()/100.0
-                self.media_manager.restore_background_volume(bgv)
+                self.vol_control_widget.update_bg_volume()
+                # self.media_manager.restore_background_volume()
                 
             except Exception as e:
                 print(f"Error playing media set: {e}")
