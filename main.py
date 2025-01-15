@@ -7,7 +7,7 @@ import subprocess
 import time
 from threading import Thread
 from PyQt5.QtWidgets import QApplication
-from gui import ImageViewer
+from gui import ImageViewer, VolumeControlWidget
 from media_manager import MediaManager
 from playlist_manager import PlaylistManager
 from config import Config
@@ -102,7 +102,8 @@ class PlaylistMonitor(Thread):
                 time.sleep(total_wait)
                 
                 # Restore background music volume
-                self.media_manager.restore_background_volume(self.bg_slider.value()/100.0)
+                bgv = VolumeControlWidget().bg_slider.value()/100.0
+                self.media_manager.restore_background_volume(bgv)
                 
             except Exception as e:
                 print(f"Error playing media set: {e}")
