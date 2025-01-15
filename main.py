@@ -7,7 +7,8 @@ import subprocess
 import time
 from threading import Thread
 from PyQt5.QtWidgets import QApplication
-from gui import ImageViewer, VolumeControlWidget
+from gui import ImageViewer
+from vol_control import VolumeControlWidget
 from media_manager import MediaManager
 from playlist_manager import PlaylistManager
 from config import Config
