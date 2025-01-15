@@ -143,10 +143,10 @@ def main():
     # Start the playlist loop in a separate thread
     playlist_thread = Thread(target=run_playlist_loop, daemon=True)
     playlist_thread.start()
-    
-    # app.aboutToQuit.connect(restore_screen_saver)
+  
     app.aboutToQuit.connect(lambda: setattr(playlist_thread, "running", False))
-    app.aboutToQuit.connect(lambda: restore_screensaver(viewer))
+    # app.aboutToQuit.connect(lambda: restore_screensaver(viewer))
+    
     sys.exit(app.exec_())
 
 if __name__ == "__main__":
