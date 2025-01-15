@@ -40,13 +40,6 @@ class ImageViewer(QMainWindow):
         self.image_widget.setScaledContents(True)
         self.layout.addWidget(self.image_widget)
 
-        # # Create a stacked widget for images
-        # self.stacked_widget = QStackedWidget()
-        # self.image_widget = QLabel(self)
-        # self.image_widget.setAlignment(Qt.AlignCenter)
-        # self.stacked_widget.addWidget(self.image_widget)
-        # self.layout.addWidget(self.stacked_widget)
-
         # Volume control button (added directly to layout)
         self.volume_button = QPushButton("", self)
         self.volume_button.setStyleSheet("""
@@ -67,14 +60,13 @@ class ImageViewer(QMainWindow):
         
         # self.volume_button.setGeometry(10, 10, 150, 40)  # x, y, width, height
         
-        vol_icon = QIcon("vol_icon.png")  # Provide the path to your icon image
+        vol_icon = QIcon("icons/vol_icon.png")  # Provide the path to your icon image
         self.volume_button.setIcon(vol_icon)
         self.volume_button.setIconSize(QSize(30, 30))  # Adjust the icon size
         
         self.volume_button.setFixedSize(50, 50)  # Set width and height in pixels
         # self.volume_button.move(self.width() - 220, 20)  # Position: Top-right with margins
         self.volume_button.clicked.connect(self.open_volume_control)
-        print("Volume button created and added to layout.")
         
         # Add a separate layout for positioning the button
         button_layout = QVBoxLayout()
@@ -102,7 +94,7 @@ class ImageViewer(QMainWindow):
     }
 """)# border: 2px solid #888;
            
-        wifi_icon = QIcon("wifi_icon.png")  # Provide the path to your icon image
+        wifi_icon = QIcon("icons/wifi_icon.png")  # Provide the path to your icon image
         self.wifi_button.setIcon(wifi_icon)
         self.wifi_button.setIconSize(QSize(30, 30))  # Adjust the icon size
         
@@ -196,91 +188,3 @@ class ImageViewer(QMainWindow):
                     background-color: #222;
                 }
             """)
-
-
-# class VolumeControlWidget(QWidget):
-#     def __init__(self, media_manager, viewer):
-#         super().__init__()
-#         self.media_manager = media_manager
-#         self.viewer = viewer
-#         self.init_ui()
-
-#     def init_ui(self):
-#         self.setWindowTitle("Volume Control")
-#         self.setStyleSheet("background-color: black; color: white;")
-
-#         # Layout
-#         layout = QVBoxLayout()
-
-#         # Background music volume control
-#         self.bg_label = QLabel("Background Music Volume")
-#         self.bg_slider = QSlider(Qt.Horizontal)
-#         self.bg_slider.setStyleSheet("""
-#     QSlider {
-#         background-color: #f0f0f0;
-#         height: 10px;
-#         border-radius: 5px;
-#     }
-#     QSlider::handle {
-#         background-color: #0078d7;
-#         border: 2px solid #005a8a;
-#         border-radius: 5px;
-#         width: 20px;
-#         height: 20px;
-#     }
-#     QSlider::handle:pressed {
-#         background-color: #005a8a;
-#     }
-# """)
-#         self.bg_slider.setRange(0, 100)
-#         self.bg_slider.setValue(self.viewer.bg_volume)
-#         self.bg_slider.valueChanged.connect(self.update_bg_volume)
-
-#         # Media audio volume control
-#         self.media_label = QLabel("Media Audio Volume")
-#         self.media_slider = QSlider(Qt.Horizontal)
-#         self.media_slider.setStyleSheet("""
-#     QSlider {
-#         background-color: #f0f0f0;
-#         height: 10px;
-#         border-radius: 5px;
-#     }
-#     QSlider::handle {
-#         background-color: #0078d7;
-#         border: 2px solid #005a8a;
-#         border-radius: 5px;
-#         width: 20px;
-#         height: 20px;
-#     }
-#     QSlider::handle:pressed {
-#         background-color: #005a8a;
-#     }
-# """)
-#         self.media_slider.setRange(0, 100)
-#         self.media_slider.setValue(self.viewer.media_volume)
-#         self.media_slider.valueChanged.connect(self.update_media_volume)
-
-#         # Close button
-#         self.close_button = QPushButton("Close")
-#         self.close_button.clicked.connect(self.close)
-
-#         # Add widgets to layout
-#         layout.addWidget(self.bg_label)
-#         layout.addWidget(self.bg_slider)
-#         layout.addWidget(self.media_label)
-#         layout.addWidget(self.media_slider)
-#         layout.addWidget(self.close_button)
-
-#         self.setLayout(layout)
-
-#     def update_bg_volume(self):
-#         volume = self.bg_slider.value() / 100.0
-#         self.media_manager.background_channel.set_volume(volume)
-#         self.viewer.bg_volume = self.bg_slider.value()  # Save state
-#         print(f"Updated BG Volume to {volume}")
-
-#     def update_media_volume(self):
-#         volume = self.media_slider.value() / 100.0
-#         self.media_manager.media_channel.set_volume(volume)
-#         self.viewer.media_volume = self.media_slider.value()  # Save state
-#         print(f"Updated Media Volume to {volume}")

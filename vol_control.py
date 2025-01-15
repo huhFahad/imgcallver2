@@ -69,8 +69,8 @@ class VolumeControlWidget(QWidget):
 
     def update_bg_volume(self):
         volume = self.bg_slider.value() / 100.0
-        self.media_manager.background_channel.set_volume(volume)
         self.viewer.bg_volume = self.bg_slider.value()  # Save state
+        self.media_manager.background_channel.set_volume(volume)
         print(f"Updated BG Volume to {volume}")
 
     def update_media_volume(self):
