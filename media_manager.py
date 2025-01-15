@@ -65,5 +65,5 @@ class MediaManager:
             self.background_channel.play(background_sound, loops=-1)
             self.background_channel.set_volume(1.0)
             
-    def restore_background_volume(self):
-        self.background_channel.set_volume(1.0)
+    def restore_background_volume(self,bg_volume):
+        self.background_channel.set_volume(bg_volume)

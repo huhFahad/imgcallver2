@@ -102,7 +102,7 @@ class PlaylistMonitor(Thread):
                 time.sleep(total_wait)
                 
                 # Restore background music volume
-                self.media_manager.restore_background_volume()
+                self.media_manager.restore_background_volume(self.bg_slider.value()/100.0)
                 
             except Exception as e:
                 print(f"Error playing media set: {e}")
