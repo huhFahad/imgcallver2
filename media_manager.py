@@ -12,7 +12,7 @@ class MediaManager:
         pygame.mixer.init()
         self.background_channel = pygame.mixer.Channel(0)
         self.media_channel = pygame.mixer.Channel(1)
-        self.vol_control_widget = VolumeControlWidget(self.media_manager, viewer)
+        # self.vol_control_widget = VolumeControlWidget(self.media_manager, viewer)
         
     def download_file(self, url, directory):
         try:
@@ -65,8 +65,8 @@ class MediaManager:
         if os.path.exists(Config.BACKGROUND_MUSIC):
             background_sound = pygame.mixer.Sound(Config.BACKGROUND_MUSIC)
             self.background_channel.play(background_sound, loops=-1)
-            volume = self.vol_control_widget.bg_slider.value() / 100.0
-            self.background_channel.set_volume(volume)
+            # volume = self.vol_control_widget.bg_slider.value() / 100.0
+            self.background_channel.set_volume(1.0)
             
     def restore_background_volume(self,bg_volume):
         self.background_channel.set_volume(bg_volume)
