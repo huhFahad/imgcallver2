@@ -117,10 +117,10 @@ def restore_screen_saver():
 
 def main():
     app = QApplication(sys.argv)
-    subprocess.call(["xdg-screensaver", "suspend", ":0"])
     media_manager = MediaManager()  # Instantiate MediaManager
     viewer = ImageViewer(media_manager) 
     viewer.show()
+    subprocess.call(["xdg-screensaver", "suspend", ":0"])
     monitor = PlaylistMonitor(viewer)
     
     def run_playlist_loop():
