@@ -45,30 +45,34 @@ class ImageViewer(QMainWindow):
 
         # Volume control button (added directly to layout)
         self.volume_button = QPushButton("", self)
+
+        vol_icon = QIcon("icons/vol_icon.png")  # Provide the path to your icon image
+        self.volume_button.setIcon(vol_icon)
+        self.volume_button.setIconSize(QSize(30, 30))  # Adjust the icon size
+
         self.volume_button.setStyleSheet("""
         QPushButton {
+            opacity: 0.5;
             background-color: white;
             color: white;
             border-radius: 20px;
             padding: 10px;
-            opacity: 0.5;
+            
         }
         QPushButton:hover {
-            background-color: #666;
             opacity: 1.0;
+            background-color: #666;
+            
         }
         QPushButton:pressed {
-            background-color: #222;
             opacity: 1.0;
+            background-color: #222;
+            
         }
         """)  #border: 2px solid #888;
         
         # self.volume_button.setGeometry(10, 10, 150, 40)  # x, y, width, height
-        
-        vol_icon = QIcon("icons/vol_icon.png")  # Provide the path to your icon image
-        self.volume_button.setIcon(vol_icon)
-        self.volume_button.setIconSize(QSize(30, 30))  # Adjust the icon size
-        
+              
         self.volume_button.setFixedSize(50, 50)  # Set width and height in pixels
         # self.volume_button.move(self.width() - 220, 20)  # Position: Top-right with margins
         self.volume_button.clicked.connect(self.open_volume_control)
@@ -83,28 +87,31 @@ class ImageViewer(QMainWindow):
 
         # Add Wi-Fi Settings Button
         self.wifi_button = QPushButton("", self)
+
+        wifi_icon = QIcon("icons/wifi_icon.png")  # Provide the path to your icon image
+        self.wifi_button.setIcon(wifi_icon)
+        self.wifi_button.setIconSize(QSize(30, 30))  # Adjust the icon size
+
         self.wifi_button.setStyleSheet("""
     QPushButton {
+        opacity: 0.5;
         background-color: white;
         color: white;
         border-radius: 20px;
         padding: 10px;
-        opacity: 0.5;
     }
     QPushButton:hover {
-        background-color: #666;
         opacity: 1.0;
+        background-color: #666;
+        
     }
     QPushButton:pressed {
-        background-color: #222;
         opacity: 1.0;
+        background-color: #222;
+        
     }
 """)# border: 2px solid #888;
-           
-        wifi_icon = QIcon("icons/wifi_icon.png")  # Provide the path to your icon image
-        self.wifi_button.setIcon(wifi_icon)
-        self.wifi_button.setIconSize(QSize(30, 30))  # Adjust the icon size
-        
+                   
         self.wifi_button.setFixedSize(50, 50)  # Set width and height in pixels
         self.wifi_button.clicked.connect(self.open_wifi_settings)
         button_layout.addWidget(self.wifi_button)
