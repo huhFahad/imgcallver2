@@ -27,6 +27,7 @@ class ImageViewer(QMainWindow):
         self.wifi_update_timer.start(3000)  # Update every 5 seconds (adjust the interval as needed)
 
         self.last_mouse_position = None
+        self.setMouseTracking(True)
         
     def init_ui(self):
         self.setWindowTitle("Image Viewer")
@@ -118,8 +119,6 @@ class ImageViewer(QMainWindow):
 
         self.volume_button.setVisible(False)
         self.wifi_button.setVisible(False)
-
-        self.setMouseTracking(True)
 
         # Signal for updating images
         self.signal = UpdateSignal()
@@ -225,15 +224,7 @@ class ImageViewer(QMainWindow):
             print(f"Mouse moved to: {pos}")
             self.last_mouse_position = pos
 
-    def enterEvent(self, event):
-        # This is triggered when the mouse enters the window
-        print("Mouse entered the window.")
-        self.show_buttons()
-
-    def leaveEvent(self, event):
-        # This is triggered when the mouse leaves the window
-        print("Mouse left the window.")
-        self.hide_buttons()
+            self.show_buttons()
 
     def show_buttons(self):
         # Show the buttons when the mouse enters the window
@@ -245,8 +236,14 @@ class ImageViewer(QMainWindow):
             self.wifi_button.setVisible(True)
             print("Wi-Fi button is now visible.")
 
-        # Set a timer to hide the buttons after 3 seconds
-        QTimer.singleShot(3000, self.hide_buttons)
+        # Prevent stacking of multiple timers
+        if hasattr(self, 'hide_timer') and self.hide_timer.isActive():
+            self.hide_timer.stop()
+
+        self.hide_timer = QTimer(self)
+        self.hide_timer.setSingleShot(True)
+        self.hide_timer.timeout.connect(self.hide_buttons)
+        self.hide_timer.start(3000)  # Hide buttons after 3 seconds
 
     def hide_buttons(self):
         # Hide the buttons
@@ -261,3 +258,4 @@ class ImageViewer(QMainWindow):
     def mousePressEvent(self, event: QMouseEvent):
         if event.button() == Qt.LeftButton:
             print("Left mouse button clicked at:", event.pos())
+            self.show_buttons()
