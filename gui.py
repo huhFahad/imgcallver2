@@ -214,7 +214,7 @@ class ImageViewer(QMainWindow):
                 }
             """)
 
-    ef mouseMoveEvent(self, event: QMouseEvent):
+    def mouseMoveEvent(self, event: QMouseEvent):
         # Detect mouse movement anywhere on the screen
         pos = event.pos()
         if self.last_mouse_position is None:
