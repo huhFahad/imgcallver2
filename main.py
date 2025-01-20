@@ -17,7 +17,7 @@ import json
 import pygame
 
 class PlaylistMonitor(Thread):
-    def __init__(self, viewer, interval=5):
+    def __init__(self, viewer, interval=2):
         super().__init__()
         self.viewer = viewer
         self.interval = interval
@@ -97,8 +97,8 @@ class PlaylistMonitor(Thread):
                 print(f"Playing audio: {audio_url}")
                 self.media_manager.play_audio(audio_url)
                 
-                # Wait for audio duration plus 2 seconds
-                total_wait = audio_duration + 2
+                # Wait for audio duration plus 3 seconds
+                total_wait = audio_duration + 3
                 time.sleep(total_wait)
                 
                 # Restore background music volume
