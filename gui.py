@@ -26,7 +26,7 @@ class ImageViewer(QMainWindow):
         self.wifi_update_timer.timeout.connect(self.update_wifi_status)  # Connect the timeout signal to the status update method
         self.wifi_update_timer.start(3000)  # Update every 5 seconds (adjust the interval as needed)
 
-
+        self.last_mouse_position = None
         
     def init_ui(self):
         self.setWindowTitle("Image Viewer")
@@ -53,7 +53,7 @@ class ImageViewer(QMainWindow):
         self.volume_button.setStyleSheet("""
         QPushButton {
             
-            background-color: rgba(255,255,255,20%);
+            background-color: rgba(255,255,255,100%);
             color: white;
             border-radius: 20px;
             padding: 10px;
@@ -61,7 +61,7 @@ class ImageViewer(QMainWindow):
         }
         QPushButton:hover {
             
-            background-color: rgba(255,255,255,100%);
+            background-color: rgba(200,200,255,100%);
             
         }
         QPushButton:pressed {
@@ -94,19 +94,19 @@ class ImageViewer(QMainWindow):
 
         self.wifi_button.setStyleSheet("""
     QPushButton {
-        opacity: 0.5;
+        
         background-color: white;
         color: white;
         border-radius: 20px;
         padding: 10px;
     }
     QPushButton:hover {
-        opacity: 1.0;
+        
         background-color: #666;
         
     }
     QPushButton:pressed {
-        # opacity: 1.0;
+       
         background-color: #222;
         
     }
@@ -115,6 +115,9 @@ class ImageViewer(QMainWindow):
         self.wifi_button.setFixedSize(50, 50)  # Set width and height in pixels
         self.wifi_button.clicked.connect(self.open_wifi_settings)
         button_layout.addWidget(self.wifi_button)
+
+        self.volume_button.setVisible(False)
+        self.wifi_button.setVisible(False)
 
         # Signal for updating images
         self.signal = UpdateSignal()
@@ -208,3 +211,35 @@ class ImageViewer(QMainWindow):
                     opacity: 1.0;
                 }
             """)
+
+    def mouseMoveEvent(self, event: QMouseEvent):
+        # Get the mouse position
+        pos = event.pos()
+
+        if self.last_mouse_position is None:
+            self.last_mouse_position = pos
+
+        # If the mouse has moved or a button was pressed
+        if (pos != self.last_mouse_position) or (event.button()):
+            print(f"Mouse movement or click detected")
+            self.last_mouse_position = pos
+
+            # Show the buttons temporarily
+            self.handle_mouse_move_action(pos)
+
+    def handle_mouse_move_action(self, pos):
+        # Show the volume button if it's not visible
+        if not self.volume_button.isVisible():
+            self.volume_button.setVisible(True)
+            print("Volume button is now visible.")
+            
+            # Set a timer to hide the volume button after 3 seconds
+            QTimer.singleShot(3000, self.volume_button.setVisible(False))  # Hide after 3 seconds
+
+        # Show the Wi-Fi button if it's not visible
+        if not self.wifi_button.isVisible():
+            self.wifi_button.setVisible(True)
+            print("Wi-Fi button is now visible.")
+            
+            # Set a timer to hide the Wi-Fi button after 3 seconds
+            QTimer.singleShot(3000, self.wifi_button.setVisible(False))  # Hide after 3 seconds
