@@ -28,6 +28,12 @@ class ImageViewer(QMainWindow):
 
         self.last_mouse_position = None
         self.setMouseTracking(True)
+        self.widget.setMouseTracking(True)  # Enable tracking on the central widget
+        self.image_widget.setMouseTracking(True)  # Enable tracking on the image widget
+
+        self.mouse_stopped_timer = QTimer(self)
+        self.mouse_stopped_timer.setSingleShot(True)
+        self.mouse_stopped_timer.timeout.connect(self.hide_buttons)
         
     def init_ui(self):
         self.setWindowTitle("Image Viewer")
@@ -215,16 +221,21 @@ class ImageViewer(QMainWindow):
 
     def mouseMoveEvent(self, event: QMouseEvent):
         # Detect mouse movement anywhere on the screen
-        pos = event.pos()
-        if self.last_mouse_position is None:
-            self.last_mouse_position = pos
+        self.show_buttons()
+        if self.mouse_stopped_timer.isActive():
+            self.mouse_stopped_timer.stop()
+        self.mouse_stopped_timer.start(3000)  # Reset the timer on movement
 
-        # If the mouse has moved, you can handle it as needed
-        if pos != self.last_mouse_position:
-            print(f"Mouse moved to: {pos}")
-            self.last_mouse_position = pos
+    def enterEvent(self, event):
+        # Show buttons when mouse enters the window
+        self.show_buttons()
+        event.accept()
 
-            self.show_buttons()
+    def leaveEvent(self, event):
+        # Immediately hide buttons when the mouse exits the window
+        self.hide_buttons()
+        event.accept()
+    
 
     def show_buttons(self):
         # Show the buttons when the mouse enters the window
@@ -236,26 +247,12 @@ class ImageViewer(QMainWindow):
             self.wifi_button.setVisible(True)
             print("Wi-Fi button is now visible.")
 
-        # Prevent stacking of multiple timers
-        if hasattr(self, 'hide_timer') and self.hide_timer.isActive():
-            self.hide_timer.stop()
-
-        self.hide_timer = QTimer(self)
-        self.hide_timer.setSingleShot(True)
-        self.hide_timer.timeout.connect(self.hide_buttons)
-        self.hide_timer.start(3000)  # Hide buttons after 3 seconds
-
     def hide_buttons(self):
-        # Hide the buttons
-        if self.volume_button.isVisible():
-            self.volume_button.setVisible(False)
-            print("Volume button is now hidden.")
+    # Hide buttons
+    if self.volume_button.isVisible():
+        self.volume_button.setVisible(False)
+        print("Volume button is now hidden.")
 
-        if self.wifi_button.isVisible():
-            self.wifi_button.setVisible(False)
-            print("Wi-Fi button is now hidden.")
-
-    def mousePressEvent(self, event: QMouseEvent):
-        if event.button() == Qt.LeftButton:
-            print("Left mouse button clicked at:", event.pos())
-            self.show_buttons()
+    if self.wifi_button.isVisible():
+        self.wifi_button.setVisible(False)
+        print("Wi-Fi button is now hidden.")
