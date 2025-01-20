@@ -119,6 +119,8 @@ class ImageViewer(QMainWindow):
         self.volume_button.setVisible(False)
         self.wifi_button.setVisible(False)
 
+        self.setMouseTracking(True)
+
         # Signal for updating images
         self.signal = UpdateSignal()
         self.signal.update_images.connect(self.update_image_display)
@@ -212,7 +214,7 @@ class ImageViewer(QMainWindow):
                 }
             """)
 
-    def mouseMoveEvent(self, event: QMouseEvent):
+    ef mouseMoveEvent(self, event: QMouseEvent):
         # Detect mouse movement anywhere on the screen
         pos = event.pos()
         if self.last_mouse_position is None:
