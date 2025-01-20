@@ -103,7 +103,8 @@ class PlaylistMonitor(Thread):
                 
                 # Restore background music volume
                 # self.vol_control_widget.update_bg_volume()
-                self.media_manager.restore_background_volume()
+                volume = self.vol_control_widget.bg_slider.value() / 100.0
+                self.media_manager.restore_background_volume(volume)
                 print("inside main")
                 
                 

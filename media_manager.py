@@ -68,6 +68,6 @@ class MediaManager:
             # volume = self.vol_control_widget.bg_slider.value() / 100.0
             self.background_channel.set_volume(1.0)
             
-    def restore_background_volume(self):
-        self.background_channel.set_volume(1.0)
+    def restore_background_volume(self,v):
+        self.background_channel.set_volume(v)
         print(f"Restored ")
