@@ -234,7 +234,7 @@ class ImageViewer(QMainWindow):
             print("Volume button is now visible.")
             
             # Set a timer to hide the volume button after 3 seconds
-            QTimer.singleShot(3000, self.volume_button.setVisible(False))  # Hide after 3 seconds
+            QTimer.singleShot(3000, self.hide_volume_button)  # Hide after 3 seconds
 
         # Show the Wi-Fi button if it's not visible
         if not self.wifi_button.isVisible():
@@ -242,4 +242,12 @@ class ImageViewer(QMainWindow):
             print("Wi-Fi button is now visible.")
             
             # Set a timer to hide the Wi-Fi button after 3 seconds
-            QTimer.singleShot(3000, self.wifi_button.setVisible(False))  # Hide after 3 seconds
+            QTimer.singleShot(3000, self.hide_wifi_button)  # Hide after 3 seconds
+
+    def hide_volume_button(self):
+        self.volume_button.setVisible(False)
+        print("Volume button is now hidden.")
+
+    def hide_wifi_button(self):
+        self.wifi_button.setVisible(False)
+        print("Wi-Fi button is now hidden.")
