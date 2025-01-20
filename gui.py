@@ -52,8 +52,8 @@ class ImageViewer(QMainWindow):
 
         self.volume_button.setStyleSheet("""
         QPushButton {
-            opacity: 0.5;
-            background-color: rgba(255,255,255,50%);
+            
+            background-color: rgba(255,255,255,20%);
             color: white;
             border-radius: 20px;
             padding: 10px;
