@@ -73,7 +73,7 @@ class ImageViewer(QMainWindow):
         }
         QPushButton:pressed {
             
-            background-color: #222;
+            background-color: rgba(188,188,211,100%);
             
         }
         """)  #border: 2px solid #888;
@@ -187,35 +187,32 @@ class ImageViewer(QMainWindow):
         if connected:
             self.wifi_button.setStyleSheet("""
                 QPushButton {
-                    background-color: green;
+                    background-color: rgba(36,255,84,100%);
                     border-radius: 20px;
                     padding: 10px;
-                    opacity: 0.5;
+                    
                 }
                 QPushButton:hover {
-                    background-color: #666;
-                    opacity: 1.0;
+                    background-color: rgba(0,255,55,100%);
+                    
                 }
                 QPushButton:pressed {
-                    background-color: #222;
-                    opacity: 1.0;
+                    background-color: rgba(0,190,41,100%);
+                    
                 }
             """)
         else:
             self.wifi_button.setStyleSheet("""
                 QPushButton {
-                    background-color: red;
+                    background-color: rgba(255,36,36,100%);
                     border-radius: 20px;
                     padding: 10px;
-                    opacity: 0.5;
                 }
                 QPushButton:hover {
-                    background-color: #666;
-                    opacity: 1.0;
+                    background-color: rgba(255,0,0,100%);
                 }
                 QPushButton:pressed {
-                    background-color: #222;
-                    opacity: 1.0;
+                    background-color: rgba(198,0,0,100%);  
                 }
             """)
 
