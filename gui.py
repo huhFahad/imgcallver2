@@ -248,11 +248,11 @@ class ImageViewer(QMainWindow):
             print("Wi-Fi button is now visible.")
 
     def hide_buttons(self):
-    # Hide buttons
-    if self.volume_button.isVisible():
-        self.volume_button.setVisible(False)
-        print("Volume button is now hidden.")
+        # Hide buttons
+        if self.volume_button.isVisible():
+            self.volume_button.setVisible(False)
+            print("Volume button is now hidden.")
 
-    if self.wifi_button.isVisible():
-        self.wifi_button.setVisible(False)
-        print("Wi-Fi button is now hidden.")
+        if self.wifi_button.isVisible():
+            self.wifi_button.setVisible(False)
+            print("Wi-Fi button is now hidden.")
