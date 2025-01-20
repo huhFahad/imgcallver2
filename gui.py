@@ -1,6 +1,6 @@
 # gui.py
 from PyQt5.QtWidgets import QMainWindow, QLabel, QVBoxLayout, QWidget, QSlider, QHBoxLayout, QPushButton, QStackedWidget, QApplication
-from PyQt5.QtGui import QPixmap, QIcon
+from PyQt5.QtGui import QPixmap, QIcon, QMouseEvent
 from PyQt5.QtCore import Qt, pyqtSignal, QObject, QSize, QTimer
 from config import Config
 from media_manager import MediaManager
