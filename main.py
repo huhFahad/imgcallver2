@@ -59,7 +59,7 @@ class PlaylistMonitor(Thread):
                 
         except Exception as e:
             print(f"Error in monitoring: {e}")
-            continue
+            pass
 
         # Continue checking for new playlists every interval (in seconds)
         if self.running:
