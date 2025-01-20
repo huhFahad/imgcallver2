@@ -29,7 +29,6 @@ class PlaylistMonitor(Thread):
     def run(self):
         """Main thread loop that checks for new playlists"""
         # self.media_manager.play_background_music()
-        
         try:
 
             # Only start the background music once
@@ -40,6 +39,8 @@ class PlaylistMonitor(Thread):
             # Load or fetch playlist
             current_id, media_list = self.playlist_manager.load_playlist_data()
             latest_id = self.playlist_manager.fetch_latest_playlist_id()
+            # latest_id = self.playlist_manager.fetch_latest_playlist_id()
+            print("LOOP TEST")
 
             # If no playlist data available or no network, display default image and continue playing bg music
             if not media_list:
@@ -58,6 +59,7 @@ class PlaylistMonitor(Thread):
                 
         except Exception as e:
             print(f"Error in monitoring: {e}")
+            continue
 
         # Continue checking for new playlists every interval (in seconds)
         if self.running:
