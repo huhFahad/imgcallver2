@@ -49,15 +49,17 @@ class ImageViewer(QMainWindow):
         QPushButton {
             background-color: white;
             color: white;
-          
             border-radius: 20px;
             padding: 10px;
+            opacity: 0.5;
         }
         QPushButton:hover {
             background-color: #666;
+            opacity: 1.0;
         }
         QPushButton:pressed {
             background-color: #222;
+            opacity: 1.0;
         }
         """)  #border: 2px solid #888;
         
@@ -85,15 +87,17 @@ class ImageViewer(QMainWindow):
     QPushButton {
         background-color: white;
         color: white;
-        
         border-radius: 20px;
         padding: 10px;
+        opacity: 0.5;
     }
     QPushButton:hover {
         background-color: #666;
+        opacity: 1.0;
     }
     QPushButton:pressed {
         background-color: #222;
+        opacity: 1.0;
     }
 """)# border: 2px solid #888;
            
@@ -169,12 +173,15 @@ class ImageViewer(QMainWindow):
                     background-color: green;
                     border-radius: 20px;
                     padding: 10px;
+                    opacity: 0.5;
                 }
                 QPushButton:hover {
                     background-color: #666;
+                    opacity: 1.0;
                 }
                 QPushButton:pressed {
                     background-color: #222;
+                    opacity: 1.0;
                 }
             """)
         else:
@@ -183,11 +190,14 @@ class ImageViewer(QMainWindow):
                     background-color: red;
                     border-radius: 20px;
                     padding: 10px;
+                    opacity: 0.5;
                 }
                 QPushButton:hover {
                     background-color: #666;
+                    opacity: 1.0;
                 }
                 QPushButton:pressed {
                     background-color: #222;
+                    opacity: 1.0;
                 }
             """)
