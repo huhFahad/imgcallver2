@@ -6,6 +6,7 @@ from config import Config
 from media_manager import MediaManager
 from wifi_control import WiFiSettingsDialog, get_wifi_strength
 from vol_control import VolumeControlWidget
+from screeninfo import get_monitors
 
 class UpdateSignal(QObject):
     update_images = pyqtSignal(list)
@@ -13,8 +14,10 @@ class UpdateSignal(QObject):
 class ImageViewer(QMainWindow):
     def __init__(self, media_manager):
         super().__init__()
+
+        display_resolution = get_monitors()[0]  # Get the first monitor (if you have multiple, you can iterate)
         self.media_manager = media_manager
-        self.setFixedSize(1920,1080)
+        self.setFixedSize(display_resolution.width,display_resolution.height)
         self.init_ui()
         self.bg_volume = 100  # Default background music volume 
         self.media_volume = 100  # Default media audio volume 
