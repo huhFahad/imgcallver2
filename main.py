@@ -39,7 +39,6 @@ class PlaylistMonitor(Thread):
             # Load or fetch playlist
             current_id, media_list = self.playlist_manager.load_playlist_data()
             latest_id = self.playlist_manager.fetch_latest_playlist_id()
-            # latest_id = self.playlist_manager.fetch_latest_playlist_id()
             print("LOOP TEST")
 
             # If no playlist data available or no network, display default image and continue playing bg music

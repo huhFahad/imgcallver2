@@ -7,6 +7,7 @@ from media_manager import MediaManager
 from wifi_control import WiFiSettingsDialog, get_wifi_strength
 from vol_control import VolumeControlWidget
 from screeninfo import get_monitors
+import os, sys
 
 class UpdateSignal(QObject):
     update_images = pyqtSignal(list)
@@ -78,10 +79,8 @@ class ImageViewer(QMainWindow):
         }
         """)  #border: 2px solid #888;
         
-        # self.volume_button.setGeometry(10, 10, 150, 40)  # x, y, width, height
               
         self.volume_button.setFixedSize(50, 50)  # Set width and height in pixels
-        # self.volume_button.move(self.width() - 220, 20)  # Position: Top-right with margins
         self.volume_button.clicked.connect(self.open_volume_control)
         
         # Add a separate layout for positioning the button
@@ -123,8 +122,40 @@ class ImageViewer(QMainWindow):
         self.wifi_button.clicked.connect(self.open_wifi_settings)
         button_layout.addWidget(self.wifi_button)
 
+        # Add Wi-Fi Settings Button
+        self.restart_button = QPushButton("", self)
+
+        restart_icon = QIcon("icons/restart_icon.png")  # Provide the path to your icon image
+        self.restart_button.setIcon(restart_icon)
+        self.restart_button.setIconSize(QSize(30, 30))  # Adjust the icon size
+
+        self.restart_button.setStyleSheet("""
+    QPushButton {
+        
+        background-color: white;
+        color: white;
+        border-radius: 20px;
+        padding: 10px;
+    }
+    QPushButton:hover {
+        
+        background-color: #666;
+        
+    }
+    QPushButton:pressed {
+       
+        background-color: #222;
+        
+    }
+""")# border: 2px solid #888;
+                   
+        self.restart_button.setFixedSize(50, 50)  # Set width and height in pixels
+        self.restart_button.clicked.connect(self.restart_program)
+        button_layout.addWidget(self.restart_button)
+
         self.volume_button.setVisible(False)
         self.wifi_button.setVisible(False)
+        self.restart_button.setVisible(False)
 
         # Signal for updating images
         self.signal = UpdateSignal()
@@ -238,18 +269,33 @@ class ImageViewer(QMainWindow):
         # Show the buttons when the mouse enters the window
         if not self.volume_button.isVisible():
             self.volume_button.setVisible(True)
-            print("Volume button is now visible.")
+            # print("Volume button is now visible.")
 
         if not self.wifi_button.isVisible():
             self.wifi_button.setVisible(True)
-            print("Wi-Fi button is now visible.")
+            # print("Wi-Fi button is now visible.")
+
+        if not self.restart_button.isVisible():
+            self.restart_button.setVisible(True)
+            # print("Wi-Fi button is now visible.")
 
     def hide_buttons(self):
         # Hide buttons
         if self.volume_button.isVisible():
             self.volume_button.setVisible(False)
-            print("Volume button is now hidden.")
+            # print("Volume button is now hidden.")
 
         if self.wifi_button.isVisible():
             self.wifi_button.setVisible(False)
-            print("Wi-Fi button is now hidden.")
+            # print("Wi-Fi button is now hidden.")
+
+        if self.restart_button.isVisible():
+            self.restart_button.setVisible(False)
+            # print("Wi-Fi button is now hidden.")
+
+
+    def restart_program(self):
+            """Restart the current program."""
+            print("Restarting program...")
+            python = sys.executable  # Path to the Python interpreter
+            os.execl(python, python, *sys.argv)  # Replace current process with a new instance
