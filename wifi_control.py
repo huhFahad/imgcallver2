@@ -1,7 +1,6 @@
 #wifi_control.py
 
-import subprocess
-import time
+import subprocess, time
 from message import show_message
 from PyQt5.QtWidgets import QDialog, QLabel, QHBoxLayout, QVBoxLayout, QComboBox, QLineEdit, QPushButton
 

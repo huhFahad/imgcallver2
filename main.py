@@ -1,9 +1,7 @@
 #!/usr/bin/env python3
 # main.py
 
-import sys
-import subprocess
-import time
+import sys, subprocess, time, pygame
 from threading import Thread
 from PyQt5.QtWidgets import QApplication
 from gui import ImageViewer
@@ -11,7 +9,6 @@ from vol_control import VolumeControlWidget
 from media_manager import MediaManager
 from playlist_manager import PlaylistManager
 from config import Config
-import pygame
 
 class PlaylistMonitor(Thread):
     def __init__(self, viewer, interval=2):

@@ -1,7 +1,5 @@
 # media_manager.py
-import requests
-import os
-import pygame
+import requests, os, pygame
 from config import Config
 
 class MediaManager:

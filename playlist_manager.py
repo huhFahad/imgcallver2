@@ -1,9 +1,7 @@
 # playlist_manager.py
 
 from config import Config
-import requests
-import json
-import os
+import os, requests, json
 
 class PlaylistManager:
     def __init__(self):
