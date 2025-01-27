@@ -2,9 +2,8 @@
 
 import subprocess
 import time
-
-from PyQt5.QtWidgets import QDialog, QLabel, QHBoxLayout, QVBoxLayout, QComboBox, QLineEdit, QPushButton, QMessageBox
-from PyQt5.QtCore import QTimer
+from message import show_message
+from PyQt5.QtWidgets import QDialog, QLabel, QHBoxLayout, QVBoxLayout, QComboBox, QLineEdit, QPushButton
 
 class WiFiSettingsDialog(QDialog):
     def __init__(self):
@@ -12,9 +11,9 @@ class WiFiSettingsDialog(QDialog):
 
         try:
             subprocess.check_output(['nmcli', 'radio', 'wifi', 'on'], text=True)
-            self.show_message("Warning", "Please wait.. Scanning for available Wifi Networks...")
+            show_message("Warning", "Please wait.. Scanning for available Wifi Networks...")
         except subprocess.CalledProcessError as e:
-            self.show_message("Error", f"Error enabling Wi-Fi: {e}")
+            show_message("Error", f"Error enabling Wi-Fi: {e}")
 
         self.setWindowTitle('Wi-Fi Networks')
         self.setFixedSize(450, 300)
@@ -86,11 +85,11 @@ class WiFiSettingsDialog(QDialog):
         if networks:
             self.network_dropdown.addItems(networks)
         elif num > 0:
-            self.show_message("Warning", "Please wait.. Scanning for available Wifi Networks...")
+            show_message("Warning", "Please wait.. Scanning for available Wifi Networks...")
             time.sleep(2)  # Brief pause between scans
             self.populate_wifi_networks(num - 1)
         else:
-            self.show_message("Error", "No Wi-Fi networks detected after multiple attempts")
+            show_message("Error", "No Wi-Fi networks detected after multiple attempts")
             self.close()
 
     def scan_wifi_networks(self):
@@ -116,9 +115,9 @@ class WiFiSettingsDialog(QDialog):
             ]
 
         except subprocess.CalledProcessError as e:
-            self.show_message("Error", f"Failed to scan Wi-Fi networks. Command error: {e.stderr}")
+            show_message("Error", f"Failed to scan Wi-Fi networks. Command error: {e.stderr}")
         except Exception as e:
-            self.show_message("Error", f"Unexpected error while scanning Wi-Fi networks: {e}")
+            show_message("Error", f"Unexpected error while scanning Wi-Fi networks: {e}")
 
     def connect_to_wifi(self):
         try:
@@ -127,7 +126,7 @@ class WiFiSettingsDialog(QDialog):
             password = self.password_input.text()
 
             if not ssid or not password:
-                self.show_message("Error", "Please select a Wi-Fi network and enter a password")
+                show_message("Error", "Please select a Wi-Fi network and enter a password")
                 return
 
             result = subprocess.run(
@@ -138,35 +137,26 @@ class WiFiSettingsDialog(QDialog):
             )
 
             if result.returncode == 0:
-                self.show_message("Success", f"Connected to {ssid}")
+                show_message("Success", f"Connected to {ssid}")
             else:
                 error_message = result.stderr or result.stdout
-                self.show_message("Connection Error", f"Failed to connect to {ssid}:\n{error_message}")
+                show_message("Connection Error", f"Failed to connect to {ssid}:\n{error_message}")
 
         except subprocess.TimeoutExpired:
-            self.show_message("Error", "Connection attempt timed out")
+            show_message("Error", "Connection attempt timed out")
         except Exception as e:
-            self.show_message("Error", f"Unexpected connection error: {e}")
+            show_message("Error", f"Unexpected connection error: {e}")
 
 
     def disconnect_wifi(self):
         try:
             subprocess.check_output(['nmcli', 'radio', 'wifi', 'off'], text=True)
-            self.show_message("Disconnected", "Wi-Fi has been turned off.")
+            show_message("Disconnected", "Wi-Fi has been turned off.")
             self.close()
         except subprocess.CalledProcessError as e:
-            self.show_message("Error", f"Failed to disconnect Wi-Fi. Command error: {e.stderr}")
+            show_message("Error", f"Failed to disconnect Wi-Fi. Command error: {e.stderr}")
         except Exception as e:
-            self.show_message("Error", f"Unexpected error while disconnecting Wi-Fi: {e}")
-
-    def show_message(self, title, message):
-        """ Display a message box with the specified title and message """
-        msg = QMessageBox()
-        msg.setIcon(QMessageBox.Information)
-        msg.setWindowTitle(title)
-        msg.setText(message)
-        QTimer.singleShot(2000, msg.close)
-        msg.exec_()
+            show_message("Error", f"Unexpected error while disconnecting Wi-Fi: {e}")
 
 
 def get_wifi_strength(self):

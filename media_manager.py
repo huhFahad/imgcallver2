@@ -1,11 +1,8 @@
 # media_manager.py
 import requests
 import os
-import json
 import pygame
-from io import BytesIO
 from config import Config
-from vol_control import VolumeControlWidget
 
 class MediaManager:
     def __init__(self):

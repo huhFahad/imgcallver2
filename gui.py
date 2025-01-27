@@ -1,11 +1,12 @@
 # gui.py
-from PyQt5.QtWidgets import QMainWindow, QLabel, QVBoxLayout, QWidget, QSlider, QHBoxLayout, QPushButton, QStackedWidget, QApplication
+from PyQt5.QtWidgets import QMainWindow, QLabel, QVBoxLayout, QWidget, QPushButton, QApplication, QMessageBox
 from PyQt5.QtGui import QPixmap, QIcon, QMouseEvent
 from PyQt5.QtCore import Qt, pyqtSignal, QObject, QSize, QTimer
 from config import Config
 from media_manager import MediaManager
 from wifi_control import WiFiSettingsDialog, get_wifi_strength
 from vol_control import VolumeControlWidget
+from message import show_message
 from screeninfo import get_monitors
 import os, sys
 
@@ -22,6 +23,9 @@ class ImageViewer(QMainWindow):
         self.init_ui()
         self.bg_volume = 100  # Default background music volume 
         self.media_volume = 100  # Default media audio volume 
+        
+        self.previous_wifi_status = True  # Track the last-known Wi-Fi status
+        self.wifi_status_flag = False      # Flag to indicate the desired state change        
         
         self.wifi_update_timer = QTimer(self)  # Create a timer for periodic Wi-Fi checks
         self.wifi_update_timer.timeout.connect(self.update_wifi_status)  # Connect the timeout signal to the status update method
@@ -85,7 +89,6 @@ class ImageViewer(QMainWindow):
         
         # Add a separate layout for positioning the button
         button_layout = QVBoxLayout()
-        button_layout.addWidget(self.volume_button)
         button_layout.setAlignment(Qt.AlignTop | Qt.AlignRight)  # Position top-right
 
         # Add the button layout to the main layout
@@ -120,7 +123,6 @@ class ImageViewer(QMainWindow):
                    
         self.wifi_button.setFixedSize(50, 50)  # Set width and height in pixels
         self.wifi_button.clicked.connect(self.open_wifi_settings)
-        button_layout.addWidget(self.wifi_button)
 
         # Add Wi-Fi Settings Button
         self.restart_button = QPushButton("", self)
@@ -151,6 +153,10 @@ class ImageViewer(QMainWindow):
                    
         self.restart_button.setFixedSize(50, 50)  # Set width and height in pixels
         self.restart_button.clicked.connect(self.restart_program)
+        
+        
+        button_layout.addWidget(self.wifi_button)
+        button_layout.addWidget(self.volume_button)
         button_layout.addWidget(self.restart_button)
 
         self.volume_button.setVisible(False)
@@ -213,8 +219,19 @@ class ImageViewer(QMainWindow):
         wifi_dialog.exec_()
 
     def update_wifi_status(self):
-        """Check Wi-Fi connection and update the Wi-Fi button"""
+        """Check Wi-Fi connection and update the Wi-Fi button with status detection."""
         connected, _ = get_wifi_strength(self)  # Check Wi-Fi connection status
+
+        # Detect change from disconnected to connected
+        if connected and not self.previous_wifi_status:
+            self.wifi_status_flag = True
+            print("Wi-Fi status changed: Now connected.")
+            show_message("Restarting", "Wi-Fi status changed: Now connected.\nRestarting program.", 3)
+            self.restart_program()  # Trigger the restart when the status changes from disconnected to connected
+        else:
+            self.wifi_status_flag = False  # Reset the flag for other cases
+
+        # Update button styles based on connection status
         if connected:
             self.wifi_button.setStyleSheet("""
                 QPushButton {
@@ -247,8 +264,17 @@ class ImageViewer(QMainWindow):
                 }
             """)
 
+        # Update the previous status
+        self.previous_wifi_status = connected
+
     def mouseMoveEvent(self, event: QMouseEvent):
         # Detect mouse movement anywhere on the screen
+        self.show_buttons()
+        if self.mouse_stopped_timer.isActive():
+            self.mouse_stopped_timer.stop()
+        self.mouse_stopped_timer.start(3000)  # Reset the timer on movement
+
+    def mousePressEvent(self, event: QMouseEvent):
         self.show_buttons()
         if self.mouse_stopped_timer.isActive():
             self.mouse_stopped_timer.stop()
@@ -299,3 +325,4 @@ class ImageViewer(QMainWindow):
             print("Restarting program...")
             python = sys.executable  # Path to the Python interpreter
             os.execl(python, python, *sys.argv)  # Replace current process with a new instance
+

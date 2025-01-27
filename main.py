@@ -2,7 +2,6 @@
 # main.py
 
 import sys
-import os
 import subprocess
 import time
 from threading import Thread
@@ -12,8 +11,6 @@ from vol_control import VolumeControlWidget
 from media_manager import MediaManager
 from playlist_manager import PlaylistManager
 from config import Config
-from wifi_control import get_wifi_strength
-import json
 import pygame
 
 class PlaylistMonitor(Thread):
@@ -28,9 +25,8 @@ class PlaylistMonitor(Thread):
         
     def run(self):
         """Main thread loop that checks for new playlists"""
-        # self.media_manager.play_background_music()
+        
         try:
-
             # Only start the background music once
             if not hasattr(self, 'background_playing') or not self.background_playing:
                 self.media_manager.play_background_music()  # Start background music
@@ -39,6 +35,7 @@ class PlaylistMonitor(Thread):
             # Load or fetch playlist
             current_id, media_list = self.playlist_manager.load_playlist_data()
             latest_id = self.playlist_manager.fetch_latest_playlist_id()
+                            
             print("LOOP TEST")
 
             # If no playlist data available or no network, display default image and continue playing bg music
