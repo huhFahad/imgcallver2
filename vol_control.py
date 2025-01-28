@@ -1,6 +1,6 @@
 #vol_control.py
 
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QSlider, QPushButton
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QSlider, QPushButton, QSpacerItem, QSizePolicy
 from PyQt5.QtCore import Qt
 
 
@@ -13,11 +13,13 @@ class VolumeControlWidget(QWidget):
 
     def init_ui(self):
         self.setWindowTitle("Volume Control")
-        self.setFixedSize(300, 200)
-        self.setStyleSheet("background-color: black; color: white;")
+        self.setFixedSize(350, 200)
+        self.setStyleSheet("font: Roboto; color: black; background-color: rgb(220,220,220); font-weight: 500; font-size: 22px;")
 
         # Layout
         layout = QVBoxLayout()
+
+        layout.setContentsMargins(20, 20, 20, 40)
 
         # Background music volume control
         self.bg_label = QLabel("Background Music Volume")
@@ -37,6 +39,11 @@ class VolumeControlWidget(QWidget):
 
         # Close button
         self.close_button = QPushButton("Close")
+        self.close_button.setFixedSize(300, 35)
+        self.close_button.setStyleSheet("""
+        QPushButton {color: white; background-color: rgba(240, 0, 10, 0.7); font-size: 22px; font-weight: bold;}
+        QPushButton:pressed {background-color: rgba(180, 0, 0, 0.85); border-style: inset; color: white;}
+""")
         self.close_button.clicked.connect(self.close)
 
         # Add widgets to layout
@@ -44,6 +51,10 @@ class VolumeControlWidget(QWidget):
         layout.addWidget(self.bg_slider)
         layout.addWidget(self.media_label)
         layout.addWidget(self.media_slider)
+
+        spacer = QSpacerItem(10, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        layout.addItem(spacer)
+
         layout.addWidget(self.close_button)
 
         self.setLayout(layout)
@@ -52,15 +63,18 @@ class VolumeControlWidget(QWidget):
         return """
         QSlider {
             background-color: #f0f0f0;
-            height: 10px;
+            padding-left: 10px;
+            padding-right: 10px;
+            height: 25px;
             border-radius: 5px;
         }
+        
         QSlider::handle {
             background-color: #0078d7;
             border: 2px solid #005a8a;
             border-radius: 5px;
-            width: 20px;
-            height: 20px;
+            width: 25px;
+            height: 25px;
         }
         QSlider::handle:pressed {
             background-color: #005a8a;

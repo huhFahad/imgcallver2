@@ -17,6 +17,8 @@ class ImageViewer(QMainWindow):
     def __init__(self, media_manager):
         super().__init__()
 
+        self.APP_DIR = os.path.dirname(os.path.abspath(sys.argv[0]))
+
         display_resolution = get_monitors()[0]  # Get the first monitor (if you have multiple, you can iterate)
         self.media_manager = media_manager
         self.setFixedSize(display_resolution.width,display_resolution.height)
@@ -58,7 +60,7 @@ class ImageViewer(QMainWindow):
         # Volume control button (added directly to layout)
         self.volume_button = QPushButton("", self)
 
-        vol_icon = QIcon("icons/vol_icon.png")  # Provide the path to your icon image
+        vol_icon = QIcon(self.APP_DIR + "/icons/vol_icon.png")  # Provide the path to your icon image
         self.volume_button.setIcon(vol_icon)
         self.volume_button.setIconSize(QSize(30, 30))  # Adjust the icon size
 
@@ -97,7 +99,7 @@ class ImageViewer(QMainWindow):
         # Add Wi-Fi Settings Button
         self.wifi_button = QPushButton("", self)
 
-        wifi_icon = QIcon("icons/wifi_icon.png")  # Provide the path to your icon image
+        wifi_icon = QIcon(self.APP_DIR + "/icons/wifi_icon.png")  # Provide the path to your icon image
         self.wifi_button.setIcon(wifi_icon)
         self.wifi_button.setIconSize(QSize(30, 30))  # Adjust the icon size
 
@@ -111,7 +113,7 @@ class ImageViewer(QMainWindow):
     }
     QPushButton:hover {
         
-        background-color: #666;
+        background-color: rgba(200,200,255,100%);
         
     }
     QPushButton:pressed {
@@ -127,7 +129,7 @@ class ImageViewer(QMainWindow):
         # Add Wi-Fi Settings Button
         self.restart_button = QPushButton("", self)
 
-        restart_icon = QIcon("icons/restart_icon.png")  # Provide the path to your icon image
+        restart_icon = QIcon(self.APP_DIR + "/icons/restart_icon.png")  # Provide the path to your icon image
         self.restart_button.setIcon(restart_icon)
         self.restart_button.setIconSize(QSize(30, 30))  # Adjust the icon size
 

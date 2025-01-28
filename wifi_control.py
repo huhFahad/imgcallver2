@@ -10,7 +10,7 @@ class WiFiSettingsDialog(QDialog):
 
         try:
             subprocess.check_output(['nmcli', 'radio', 'wifi', 'on'], text=True)
-            show_message("Warning", "Please wait.. Scanning for available Wifi Networks...")
+            # show_message("Warning", "Please wait.. Scanning for available Wifi Networks...")
         except subprocess.CalledProcessError as e:
             show_message("Error", f"Error enabling Wi-Fi: {e}")
 
