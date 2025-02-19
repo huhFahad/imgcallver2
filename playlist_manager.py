@@ -20,6 +20,8 @@ class PlaylistManager:
     def fetch_media_list(self, playlist_id):
         try:
             response = requests.get(f"{Config.API_GET_PLAYLIST}{playlist_id}")
+            # response = requests.get(f"{Config.API_GET_PLAYLIST}{1}")
+            print(f"response taken\n")
             response.raise_for_status()
             data = response.json()
             return data.get("data", {}).get("media_list", [])
